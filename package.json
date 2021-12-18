@@ -34,6 +34,7 @@
     "husky": "^4.2.5"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^4.4.1",
     "circomlib": "^2.0.2"
   }
 }
