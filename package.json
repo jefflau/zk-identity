@@ -6,7 +6,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "circuits": "circom2 circuits/verify_df_winner.circom --r1cs --wasm --sym --c"
   },
   "repository": {
     "type": "git",
@@ -31,5 +32,9 @@
     "ethers": "^5.0.0",
     "hardhat": "^2.0.4",
     "husky": "^4.2.5"
+    
+  },
+  "dependencies": {
+    "circomlib": "^2.0.2"
   }
 }
