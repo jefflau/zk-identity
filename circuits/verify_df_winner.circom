@@ -83,5 +83,3 @@ template VerifyDfWinner(n, k, levels) {
   nullifierCheck.inputs[0] <== rNum;
   nullifierCheck.out === nullifier;
 }
-
-component main = VerifyDfWinner(86, 3, 10); // NOTE: levels TBD based on actual data
