@@ -1,7 +1,9 @@
-pragma circom 2.0.1; // NOTE: may need to revert to 1.x for web?
+pragma circom 2.0.1;
 
 include "./merkle.circom";
 include "./ecdsa.circom";
+include "./eth.circom";
+
 include "../node_modules/circomlib/circuits/poseidon.circom";
 include "../node_modules/circomlib/circuits/bitify.circom";
 
@@ -21,9 +23,7 @@ template VerifyDfWinner(n, k, levels) {
   signal input s[k];
   signal input msghash[k];
 
-  // TODO: figure out if we can remove pubkey by doing a 'direct' verify on address
   signal input pubkey[2][k];
-  signal input address;
 
   signal input nullifier;
 
@@ -31,6 +31,7 @@ template VerifyDfWinner(n, k, levels) {
   signal input merklePathIndices[levels];
   signal input merkleRoot; // of eth addresses
 
+  signal address; // for now, num, but could be bit array too
   signal rNum;
   signal pubkeyBitRegisters[2][k];
 
@@ -47,7 +48,13 @@ template VerifyDfWinner(n, k, levels) {
   sigVerify.result === 1;
 
   // verify address = keccak(pubkey)
-  // pubkeybits (x,y) bits -> pubkey
+  component pubkeyToAddress = PubkeyToAddress(n, k);
+  // TODO: input pubkey
+  for (var i = 0; i < k; i++) {
+    pubkeyToAddress.pubkey[0][i] <== pubkey[0][i];
+    pubkeyToAddress.pubkey[1][i] <== pubkey[1][i];
+  }
+  address <== pubkeyToAddress.address;
 
   // merkle verify
   component treeChecker = MerkleTreeChecker(levels);
@@ -65,7 +72,6 @@ template VerifyDfWinner(n, k, levels) {
   }
   rNum <== rToNum.out;
 
-  // TODO: do we need another round of hash checking?
   component nullifierCheck = Poseidon(1);
   nullifierCheck.inputs[0] <== rNum;
   nullifierCheck.out === nullifier;
