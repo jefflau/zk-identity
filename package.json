@@ -7,7 +7,7 @@
   },
   "scripts": {
     "test": "hardhat test",
-    "circuits": "mkdir circuits/build && circom2 circuits/verify_df_winner.circom --r1cs --wasm --sym --c -o circuits/build"
+    "circuits": "mkdir circuits/build && circom2 circuits/circuits/verify_df_winner.circom --r1cs --wasm --sym --c -o circuits/build"
   },
   "repository": {
     "type": "git",
