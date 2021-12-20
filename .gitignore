@@ -1,5 +1,8 @@
 node_modules
 .idea
+.DS_Store
+
+circuits/zkeys/*
 
 #Hardhat files
 cache

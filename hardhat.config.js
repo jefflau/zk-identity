@@ -7,4 +7,19 @@ require('./tasks/faucet')
 
 module.exports = {
   solidity: '0.8.10',
+  networks: {
+    hardhat: {
+      accounts: {
+        mnemonic: "ocean genuine degree eagle radar slot oven sail hawk suffer glove sponsor"
+      },
+      loggingEnabled: false,
+      allowUnlimitedContractSize: false
+    },
+    goerli: {
+      url: "https://goerli.infura.io/v3/5667a1f708754d8687b99382f8b3a92a",
+      accounts: {
+        mnemonic: "ocean genuine degree eagle radar slot oven sail hawk suffer glove sponsor"
+      },
+    }
+  },
 }

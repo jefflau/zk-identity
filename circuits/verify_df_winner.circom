@@ -1,7 +1,9 @@
-pragma circom 2.0.1; // NOTE: may need to revert to 1.x for web?
+pragma circom 2.0.1;
 
 include "./merkle.circom";
 include "./ecdsa.circom";
+include "./eth.circom";
+
 include "../node_modules/circomlib/circuits/poseidon.circom";
 include "../node_modules/circomlib/circuits/bitify.circom";
 
@@ -21,9 +23,8 @@ template VerifyDfWinner(n, k, levels) {
   signal input s[k];
   signal input msghash[k];
 
-  // TODO: figure out if we can remove pubkey by doing a 'direct' verify on address
-  signal input pubkey[2][k];
-  signal input address;
+  // NOTE: chunked into k n-bit registers for easy use by ECDSAVerify
+  signal input chunkedPubkey[2][k];
 
   signal input nullifier;
 
@@ -31,8 +32,9 @@ template VerifyDfWinner(n, k, levels) {
   signal input merklePathIndices[levels];
   signal input merkleRoot; // of eth addresses
 
+  signal pubkeyBits[512];
+  signal address; // for now, num, but could be bit array too
   signal rNum;
-  signal pubkeyBitRegisters[2][k];
 
   // sig verify
   component sigVerify = ECDSAVerify(n, k);
@@ -41,13 +43,25 @@ template VerifyDfWinner(n, k, levels) {
     sigVerify.s[i] <== s[i];
     sigVerify.msghash[i] <== msghash[i];
 
-    sigVerify.pubkey[0][i] <== pubkey[0][i];
-    sigVerify.pubkey[1][i] <== pubkey[1][i];
+    sigVerify.pubkey[0][i] <== chunkedPubkey[0][i];
+    sigVerify.pubkey[1][i] <== chunkedPubkey[1][i];
   }
   sigVerify.result === 1;
 
   // verify address = keccak(pubkey)
-  // pubkeybits (x,y) bits -> pubkey
+  component flattenPubkey = FlattenPubkey(n, k);
+  for (var i = 0; i < k; i++) {
+    flattenPubkey.chunkedPubkey[0][i] <== chunkedPubkey[0][i];
+    flattenPubkey.chunkedPubkey[1][i] <== chunkedPubkey[1][i];
+  }
+  for (var i = 0; i < 512; i++) {
+    pubkeyBits[i] <== flattenPubkey.pubkeyBits[i];
+  }
+  component pubkeyToAddress = PubkeyToAddress();
+  for (var i = 0; i < 512; i++) {
+    pubkeyToAddress.pubkeyBits[i] <== pubkeyBits[i];
+  }
+  address <== pubkeyToAddress.address;
 
   // merkle verify
   component treeChecker = MerkleTreeChecker(levels);
@@ -65,10 +79,7 @@ template VerifyDfWinner(n, k, levels) {
   }
   rNum <== rToNum.out;
 
-  // TODO: do we need another round of hash checking?
   component nullifierCheck = Poseidon(1);
   nullifierCheck.inputs[0] <== rNum;
   nullifierCheck.out === nullifier;
 }
-
-component main = VerifyDfWinner(86, 3, 10); // NOTE: levels TBD based on actual data
