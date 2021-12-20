@@ -19,7 +19,7 @@
     "hackathon"
   ],
   "author": "Nomic Labs",
-  "license": "MIT",
+  "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/nomiclabs/hardhat-hackathon-boilerplate/issues"
   },
