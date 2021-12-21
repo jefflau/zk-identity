@@ -32,12 +32,10 @@ function flattenPubkey(x, y, n) {
     ...xBitArray.flat().slice(0, 256),
     ...yBitArray.flat().slice(0, 256),
   ]
-  console.log(bitArray.length)
-  console.log(bitArray)
   return bitArray
 }
 
-describe.only('FlattenPubkey tests', function () {
+describe('FlattenPubkey tests', function () {
   this.timeout(100000)
 
   it('flattens properly when pubkey is a perfect fit in registers', async function () {
