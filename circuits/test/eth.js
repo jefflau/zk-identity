@@ -75,4 +75,9 @@ describe('FlattenPubkey tests', function () {
   })
 })
 
+describe('Public key to address', function () {
+  it("Turns a flat public key into an address", async function () {
+  }
+})
+
 // TODO: test pubkey_to_address
