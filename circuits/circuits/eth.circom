@@ -103,7 +103,7 @@ template PubkeyToAddress() {
     // convert the last 160 bits (20 bytes) into the number corresponding to address
     component bits2Num = Bits2Num(160);
     for (var i = 96; i < 256; i++) {
-      bits2Num.in[i-96] <== pubkeyBits[i];
+      bits2Num.in[i-96] <== keccak.out[i];
     }
 
     address <== bits2Num.out;
