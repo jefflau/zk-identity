@@ -71,7 +71,7 @@ async function getWinners() {
 
 // NOTE: helper method for generating input data for proofs for an address the tester knows the pubkey of
 async function buildTreeForAddress(address) {
-  winners = [pubkey, '0x01', '0x02', '0x03']
+  winners = [address, '0x01', '0x02', '0x03']
 
   return buildTree(winners);
 }
