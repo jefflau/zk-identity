@@ -5,7 +5,6 @@ import { ethers } from "ethers";
 
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
-import TokenArtifact from "../contracts/Token.json";
 import contractAddress from "../contracts/contract-address.json";
 
 // All the logic of this dapp is contained in the Dapp component.
@@ -18,6 +17,8 @@ import { Transfer } from "./Transfer";
 import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
+
+import { CalculateProof } from "../helpers/ProofHelper";
 
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
@@ -168,6 +169,24 @@ export class Dapp extends React.Component {
   }
 
   async _connectWallet() {
+    console.log("Calculate Proof");
+    // TODO: dummy input, used for testing
+    const input = {
+      r: [10, 10, 10],
+      s: [10, 10, 10],
+      msghash: [10, 10, 10],
+      chunkedPubkey: [
+          [10, 10, 10],
+          [10, 10, 10]
+      ],
+      nullifier: 10,
+      merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+      merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+      merkleRoot: 1234
+    }  
+    const proof = await CalculateProof(input);
+    console.log(proof);
+
     // This method is run when the user clicks the Connect. It connects the
     // dapp to the user's wallet, and initializes it.
 
@@ -229,11 +248,12 @@ export class Dapp extends React.Component {
 
     // When, we initialize the contract using that provider and the token's
     // artifact. You can do this same thing with your contracts.
-    this._token = new ethers.Contract(
-      contractAddress.Token,
-      TokenArtifact.abi,
-      this._provider.getSigner(0)
-    );
+
+    // this._token = new ethers.Contract(
+    //   contractAddress.Token,
+    //   TokenArtifact.abi,
+    //   this._provider.getSigner(0)
+    // );
   }
 
   // The next two methods are needed to start and stop polling data. While
