@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import { readFile } from 'fs/promises';
 
 import { buildPoseidon } from 'circomlibjs';
@@ -6,11 +7,9 @@ const poseidon = await buildPoseidon();
 
 const NULL_NODE = -1;
 
-// TODO: store hex as
-async function buildTree(winnerHexStrs) {
-  // TODO: don't convert here? only on input to poseidon?
-  winners = winnerHexStrs.map(s => Number(s));
-  winners.sort((a, b) => a - b);
+// TODO: fixx off-by-1 errors due to NULL_NODE
+async function buildTree(winners) {
+  winners.sort();
 
   // the equivalent of pathElements and pathIndices in merkle.circom
   let leafToPathElements = Object.fromEntries( winners.map(w => [w, []] ) );
@@ -40,8 +39,9 @@ async function buildTree(winnerHexStrs) {
         leafToPathIndices[leaf].push(1);
       }
 
-      let parent = poseidon([child1, child2]);
-      // TODO: convert parent to int/hex-str
+      let parentBytes = poseidon([Number(child1), Number(child2)]);
+      let parent = '0x' + Buffer.from(parentBytes).toString('hex');
+
       nodeToLeaves[parent] = child1Leaves.concat(child2Leaves);
 
       newLevel.push(parent);
@@ -71,5 +71,6 @@ async function getWinners() {
 
 let winners = await getWinners();
 let tree = await buildTree(winners);
+console.log(tree);
 
-console.log(tree['leafToPathElements'])
+//console.log(tree['leafToPathElements'])
