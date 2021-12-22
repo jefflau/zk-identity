@@ -18,6 +18,10 @@
       "sizes": "310x310"
     }
   ],
+  "web_accessible_resources": [
+    "VerifyDfWinner_86-3-10_prod.wasm",
+    "VerifyDfWinner_86-3-10_prod.0.zkey"
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

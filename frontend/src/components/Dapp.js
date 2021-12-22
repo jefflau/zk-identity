@@ -18,7 +18,7 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 
-import { CalculateProof } from "./CalculateProof";
+import { CalculateProof } from "../helpers/ProofHelper";
 
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
@@ -169,6 +169,24 @@ export class Dapp extends React.Component {
   }
 
   async _connectWallet() {
+    console.log("Calculate Proof");
+    // TODO: dummy input, used for testing
+    const input = {
+      r: [10, 10, 10],
+      s: [10, 10, 10],
+      msghash: [10, 10, 10],
+      chunkedPubkey: [
+          [10, 10, 10],
+          [10, 10, 10]
+      ],
+      nullifier: 10,
+      merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+      merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+      merkleRoot: 1234
+    }  
+    const proof = await CalculateProof(input);
+    console.log(proof);
+
     // This method is run when the user clicks the Connect. It connects the
     // dapp to the user's wallet, and initializes it.
 
@@ -222,9 +240,6 @@ export class Dapp extends React.Component {
     this._intializeEthers();
     this._getTokenData();
     this._startPollingData();
-
-    console.log("Calculate Proof");
-    CalculateProof();
   }
 
   async _intializeEthers() {
