@@ -5,9 +5,9 @@ import { buildPoseidon } from 'circomlibjs';
 
 const poseidon = await buildPoseidon();
 
-const NULL_NODE = -1;
+// NOTE: picked this as the null field element because it's known to not be in the tree
+const NULL_NODE = 1;
 
-// TODO: fixx off-by-1 errors due to NULL_NODE
 async function buildTree(winners) {
   winners.sort();
 
@@ -27,13 +27,11 @@ async function buildTree(winners) {
       let child1Leaves = nodeToLeaves[child1];
       let child2Leaves = child2 == NULL_NODE ? [] : nodeToLeaves[child2];
 
-      // TODO: what to do about NULL_NODE?
       for (const leaf of child1Leaves) {
         leafToPathElements[leaf].push(child2);
         leafToPathIndices[leaf].push(0);
       }
 
-      // TODO: what to do about NULL_NODE?
       for (const leaf of child2Leaves) {
         leafToPathElements[leaf].push(child1);
         leafToPathIndices[leaf].push(1);
@@ -63,14 +61,12 @@ async function getWinners() {
   const r3Winners = JSON.parse(await readFile(new URL('./data/r3-winners.json', import.meta.url)))
   const r4Winners = JSON.parse(await readFile(new URL('./data/r4-winners.json', import.meta.url)))
 
-  const allWinners = r1Winners.concat(r2Winners, r3Winners, r4Winners);
+  const allWinnerObjs = r1Winners.concat(r2Winners, r3Winners, r4Winners);
+  const allWinners = allWinnerObjs.map(w => w['winner']);
 
-  return allWinners.map(w => w['winner']);
+  return [...new Set(allWinners)];
 }
 
 
 let winners = await getWinners();
 let tree = await buildTree(winners);
-console.log(tree);
-
-//console.log(tree['leafToPathElements'])
