@@ -9,7 +9,17 @@ const poseidon = await buildPoseidon();
 // NOTE: picked this as the null field element because it's known to not be in the tree
 const NULL_NODE = 1;
 
-async function buildTree(winners) {
+const TESTER_ADDRS = [
+  '0xA94a0de566a12CbC3785FAa2646F26bfC45EaE43',
+  '0xc0B9BeC21e7B1CDcEf3a3Ffa4175B7434761C417'
+]
+
+// NOTE: prod designates that we don't include TESTER_ADDRS as winners
+async function buildTree(winners, prod = false) {
+  if (!prod) {
+    winners = winners.concat(TESTER_ADDRS);
+  }
+
   winners.sort();
 
   // the equivalent of pathElements and pathIndices in merkle.circom
@@ -69,20 +79,7 @@ async function getWinners() {
 }
 
 
-// NOTE: helper method for generating input data for proofs for an address the tester knows the pubkey of
-async function buildTreeForAddress(address) {
-  winners = [address, '0x01', '0x02', '0x03']
-
-  return buildTree(winners);
-}
-
-// NOTE: replace null address with address you know
-let tree = buildTreeForAddress('0x0000000000000000000000000000000000000000');
-console.log(tree['leafToPathElements']['0x0000000000000000000000000000000000000000']);
-console.log(tree['leafToPathIndices']['0x0000000000000000000000000000000000000000']);
-
 // NOTE: uncomment to re-generate tree
-//let winners = await getWinners();
-//let tree = await buildTree(winners);
-
-//writeFileSync('output/tree.json', JSON.stringify(tree));
+let winners = await getWinners();
+let tree = await buildTree(winners);
+writeFileSync('output/tree.json', JSON.stringify(tree, null, 2));
