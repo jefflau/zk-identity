@@ -76,6 +76,7 @@ async function buildTreeForAddress(address) {
   return buildTree(winners);
 }
 
+// NOTE: replace null address with address you know
 let tree = buildTreeForAddress('0x0000000000000000000000000000000000000000');
 console.log(tree['leafToPathElements']['0x0000000000000000000000000000000000000000']);
 console.log(tree['leafToPathIndices']['0x0000000000000000000000000000000000000000']);
