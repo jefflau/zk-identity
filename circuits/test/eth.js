@@ -35,7 +35,7 @@ function flattenPubkey(x, y, n) {
   return bitArray
 }
 
-describe.only('FlattenPubkey tests', function () {
+describe('FlattenPubkey tests', function () {
   this.timeout(100000)
 
   it('flattens properly when pubkey is a perfect fit in registers', async function () {
@@ -75,12 +75,11 @@ describe.only('FlattenPubkey tests', function () {
     const output = witness.slice(1, 513)
 
     let data = JSON.stringify(output)
-    fs.writeFileSync('flattenpubkey.json', data)
     assert.deepEqual(output.join(''), expectedOut.join(''))
   })
 })
 
-describe.only('Public key to address', function () {
+describe('Public key to address', function () {
   this.timeout(100000)
   it('Turns a flat public key into an address', async function () {
     const circuit = await wasm_tester(
