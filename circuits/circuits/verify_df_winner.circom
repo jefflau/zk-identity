@@ -34,7 +34,6 @@ template VerifyDfWinner(n, k, levels) {
 
   signal pubkeyBits[512];
   signal address; // for now, num, but could be bit array too
-  signal rNum;
 
   // sig verify
   component sigVerify = ECDSAVerify(n, k);
@@ -73,13 +72,8 @@ template VerifyDfWinner(n, k, levels) {
   }
 
   // nullifier check
-  component rToNum = Bits2Num(k);
-  for (var i = 0; i < k; i++) {
-    rToNum.in[i] <== r[i];
-  }
-  rNum <== rToNum.out;
 
   component nullifierCheck = Poseidon(1);
-  nullifierCheck.inputs[0] <== rNum;
+  nullifierCheck.inputs[0] <== r[0];
   nullifierCheck.out === nullifier;
 }
