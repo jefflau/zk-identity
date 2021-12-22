@@ -31,7 +31,7 @@ function split(pubkey_bigint) {
   return [x_bigint, y_bigint]
 }
 
-describe.only('Verify df winner', function () {
+describe('Verify df winner', function () {
   this.timeout(100000)
   it('verifies df winner', async function () {
     const circuit = await wasm_tester(
