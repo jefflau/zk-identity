@@ -1,0 +1,317 @@
+[
+  {
+    "winner": "0x0797846bdb85e3303ad745e9d4e7d563a8ca1702",
+    "rank": 1,
+    "roundId": 3
+  },
+  {
+    "winner": "0x38876792c39b56f7382a8013feac08c3a03809aa",
+    "rank": 2,
+    "roundId": 3
+  },
+  {
+    "winner": "0xe0a0a42de89c695cffee76c50c3da710bb22c112",
+    "rank": 3,
+    "roundId": 3
+  },
+  {
+    "winner": "0x8dc13e92246b9e9a494173f28b07262b30cc545c",
+    "rank": 4,
+    "roundId": 3
+  },
+  {
+    "winner": "0xb43a35c30bf25f7a781c3227617cb55dcc5295ed",
+    "rank": 5,
+    "roundId": 3
+  },
+  {
+    "winner": "0x8b60d27e3cb7a23e06f1f4f4ce0c67aea05ce9d3",
+    "rank": 6,
+    "roundId": 3
+  },
+  {
+    "winner": "0xbe293aef447ebd4907125c34f76e9821ad80350c",
+    "rank": 7,
+    "roundId": 3
+  },
+  {
+    "winner": "0x33be25e259ebbd9130a90c27ed0c05061e0bce74",
+    "rank": 8,
+    "roundId": 3
+  },
+  {
+    "winner": "0x102e277c34668e96cbed6169fa1195002c11d746",
+    "rank": 9,
+    "roundId": 3
+  },
+  {
+    "winner": "0x149f119543239d0b102bc60e80d0965232229234",
+    "rank": 10,
+    "roundId": 3
+  },
+  {
+    "winner": "0x905e68ea8f1a5d369beddda96f5320359869abe5",
+    "rank": 11,
+    "roundId": 3
+  },
+  {
+    "winner": "0x48dda49c79bea78b5ec9ffcb82743887665ef08d",
+    "rank": 12,
+    "roundId": 3
+  },
+  {
+    "winner": "0x7f47ff448de7df8de4d8d898f07e0d33d942a911",
+    "rank": 13,
+    "roundId": 3
+  },
+  {
+    "winner": "0x196ad8a9c6de6afc572038031a2cafeb5068e8de",
+    "rank": 14,
+    "roundId": 3
+  },
+  {
+    "winner": "0x20d3699b3921c8bc034ed171f847866867672536",
+    "rank": 15,
+    "roundId": 3
+  },
+  {
+    "winner": "0x717ca0237dc1170f08dd4d33f092d15edf2666f8",
+    "rank": 16,
+    "roundId": 3
+  },
+  {
+    "winner": "0x9029ccc6563a8f2b1fa70e6265d90398061cb7a9",
+    "rank": 17,
+    "roundId": 3
+  },
+  {
+    "winner": "0xe5f3a73084aee0bc4a4d1ac847f67a2e94fbebd3",
+    "rank": 18,
+    "roundId": 3
+  },
+  {
+    "winner": "0xeabcd57cba653cbedca59be7285b47721da687df",
+    "rank": 19,
+    "roundId": 3
+  },
+  {
+    "winner": "0x6a673e8582135cec21cf04cbe6f46dd16cbefdd5",
+    "rank": 20,
+    "roundId": 3
+  },
+  {
+    "winner": "0xdead45326d17f31935714219e92e7672d82561b8",
+    "rank": 21,
+    "roundId": 3
+  },
+  {
+    "winner": "0x243a73682ba00ea6b1cb7d3016821b41d3f7501e",
+    "rank": 22,
+    "roundId": 3
+  },
+  {
+    "winner": "0xc5e95dab7f58b77741bbc791ac4692b5f49aec7b",
+    "rank": 23,
+    "roundId": 3
+  },
+  {
+    "winner": "0x7f8de58be74c406b27c78b287348cd60e3573414",
+    "rank": 24,
+    "roundId": 3
+  },
+  {
+    "winner": "0x7bedfaade3f1be753bbc27d070b56ad8cbd61dec",
+    "rank": 25,
+    "roundId": 3
+  },
+  {
+    "winner": "0x8189dbc0c04cf26a8c9aab590857467a0c16e145",
+    "rank": 26,
+    "roundId": 3
+  },
+  {
+    "winner": "0xc858def13a54261d83d0e5e398e69195f8d53368",
+    "rank": 27,
+    "roundId": 3
+  },
+  {
+    "winner": "0x8dd8c03a0a1193a02d0a29eb997225ca9467612e",
+    "rank": 28,
+    "roundId": 3
+  },
+  {
+    "winner": "0x2adc38e48284fd7edaaec0f13296c9588b76f03c",
+    "rank": 29,
+    "roundId": 3
+  },
+  {
+    "winner": "0x61191dc796575a4c550d6ba22cad2e86f01bbaaa",
+    "rank": 30,
+    "roundId": 3
+  },
+  {
+    "winner": "0xbc0a07b886da2a2f6cfcb5445be6e9d0ca9ff231",
+    "rank": 31,
+    "roundId": 3
+  },
+  {
+    "winner": "0xdfcddcc65f7a739d79e02071ea750500395fdd30",
+    "rank": 32,
+    "roundId": 3
+  },
+  {
+    "winner": "0x6c3a5d5c7338971e1c65fa0fef81039e8f1f8aeb",
+    "rank": 33,
+    "roundId": 3
+  },
+  {
+    "winner": "0xdeadee24ff359b01b1b64312e3dfc42b8cca8780",
+    "rank": 34,
+    "roundId": 3
+  },
+  {
+    "winner": "0xa83aff54b4a494ff0d1c136595e53ebdfafbc545",
+    "rank": 35,
+    "roundId": 3
+  },
+  {
+    "winner": "0x3915ec80cc38228cc9d4c944fb11885e71c0e03c",
+    "rank": 36,
+    "roundId": 3
+  },
+  {
+    "winner": "0xd7c378cd34f508816f2d8c6d7777b9967a799c8a",
+    "rank": 37,
+    "roundId": 3
+  },
+  {
+    "winner": "0x4b7b6d3dc60adbfd35271bcdfacc5fca5e3a2107",
+    "rank": 38,
+    "roundId": 3
+  },
+  {
+    "winner": "0x3a518df9ce2f66ae58f7d31be5f5376690244eef",
+    "rank": 39,
+    "roundId": 3
+  },
+  {
+    "winner": "0xbd3310a904fdaa5706c047d326d171ed6da05361",
+    "rank": 40,
+    "roundId": 3
+  },
+  {
+    "winner": "0x04aa9a28be2a180044990fedd49f17e2d026da6f",
+    "rank": 41,
+    "roundId": 3
+  },
+  {
+    "winner": "0x07168530fda218c4da90d4b3940dfdc9e3b181c6",
+    "rank": 42,
+    "roundId": 3
+  },
+  {
+    "winner": "0xc2bfd0eb90fb4d790114c521824fc06b7755eb98",
+    "rank": 43,
+    "roundId": 3
+  },
+  {
+    "winner": "0xdead6577cf80b3a3ca913d15f87e0846be90bfab",
+    "rank": 44,
+    "roundId": 3
+  },
+  {
+    "winner": "0xb7e2e41bf23db051b316cb106bafa0f7fc86481d",
+    "rank": 45,
+    "roundId": 3
+  },
+  {
+    "winner": "0xa62cc068e25cf655942f6dc65e939ccc104a8d98",
+    "rank": 46,
+    "roundId": 3
+  },
+  {
+    "winner": "0xbb91f5f1e2014ee5d5b48d8ef682a907220104dd",
+    "rank": 47,
+    "roundId": 3
+  },
+  {
+    "winner": "0x446a2c4de372a585f7aea47cf6c75e7e1c758de7",
+    "rank": 48,
+    "roundId": 3
+  },
+  {
+    "winner": "0x50291107174ef3cca9dda2d79a68b1827815c40d",
+    "rank": 49,
+    "roundId": 3
+  },
+  {
+    "winner": "0xdc16f079a032c4cd5ef5cf63b490fca8439670a8",
+    "rank": 50,
+    "roundId": 3
+  },
+  {
+    "winner": "0xca1880f614c08789d84524b4222f5c19fd8c4447",
+    "rank": 51,
+    "roundId": 3
+  },
+  {
+    "winner": "0xcf94a34286029a524639884ae3202c730dad5244",
+    "rank": 52,
+    "roundId": 3
+  },
+  {
+    "winner": "0x77d217908cd66cb3198bb94cbf46eb7fa5c9b62a",
+    "rank": 53,
+    "roundId": 3
+  },
+  {
+    "winner": "0x509c39f7a55666fdc2ac90b085b39b41d0f089a0",
+    "rank": 54,
+    "roundId": 3
+  },
+  {
+    "winner": "0x1bfe285b40810545fa83f1ba2ffce8e000ec5e4b",
+    "rank": 55,
+    "roundId": 3
+  },
+  {
+    "winner": "0x752ae801cda83797ac73aebfb61ab5a5551e5739",
+    "rank": 56,
+    "roundId": 3
+  },
+  {
+    "winner": "0xcda2fe1ee7f6e0f59c5f1300ef5f7b7e9653b364",
+    "rank": 57,
+    "roundId": 3
+  },
+  {
+    "winner": "0xdead7f17511b9916a146d29891e6fdc0396e6632",
+    "rank": 58,
+    "roundId": 3
+  },
+  {
+    "winner": "0x98f07439f597da9cbdb3952e1d7ec4b18a587aae",
+    "rank": 59,
+    "roundId": 3
+  },
+  {
+    "winner": "0x86d99256e501e08a482ae40d20a53fd6c6cb9272",
+    "rank": 60,
+    "roundId": 3
+  },
+  {
+    "winner": "0x0f45aba574aceba2e0717ca86e910211b34f9db9",
+    "rank": 61,
+    "roundId": 3
+  },
+  {
+    "winner": "0xbb295a92a073f6a8e4b37a6d80036465cb269786",
+    "rank": 62,
+    "roundId": 3
+  },
+  {
+    "winner": "0xf069e245a86ca01e93018c9801ad9e93ba6001ce",
+    "rank": 63,
+    "roundId": 3
+  }
+]
