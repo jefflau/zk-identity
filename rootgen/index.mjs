@@ -1,5 +1,6 @@
 import { Buffer } from 'buffer';
 import { readFile } from 'fs/promises';
+import { writeFileSync } from 'fs';
 
 import { buildPoseidon } from 'circomlibjs';
 
@@ -70,3 +71,5 @@ async function getWinners() {
 
 let winners = await getWinners();
 let tree = await buildTree(winners);
+
+writeFileSync('output/tree.json', JSON.stringify(tree));
