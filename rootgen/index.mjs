@@ -76,6 +76,9 @@ async function buildTreeForAddress(address) {
   return buildTree(winners);
 }
 
+let tree = buildTreeForAddress('0x0000000000000000000000000000000000000000');
+console.log(tree['leafToPathElements']['0x0000000000000000000000000000000000000000']);
+console.log(tree['leafToPathIndices']['0x0000000000000000000000000000000000000000']);
 
 // NOTE: uncomment to re-generate tree
 //let winners = await getWinners();
