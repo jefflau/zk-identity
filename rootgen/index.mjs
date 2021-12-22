@@ -69,7 +69,16 @@ async function getWinners() {
 }
 
 
-let winners = await getWinners();
-let tree = await buildTree(winners);
+// NOTE: helper method for generating input data for proofs for an address the tester knows the pubkey of
+async function buildTreeForAddress(address) {
+  winners = [pubkey, '0x01', '0x02', '0x03']
 
-writeFileSync('output/tree.json', JSON.stringify(tree));
+  return buildTree(winners);
+}
+
+
+// NOTE: uncomment to re-generate tree
+//let winners = await getWinners();
+//let tree = await buildTree(winners);
+
+//writeFileSync('output/tree.json', JSON.stringify(tree));
