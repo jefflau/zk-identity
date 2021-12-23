@@ -1,42 +1,33 @@
+/*eslint-disable*/
 import { ethers } from "ethers";
+// import { buildPoseidon } from 'circomlibjs';
 
 const MESSAGE = "ZK Identity: Dark Forest Winners";
 
-// k elements, each n bits, little endian
-function hexStrToArray(n, k, hexStr) {
-    var result = new Array(k).fill(0);
-
-    var hex = hexStr.substring(2);
-    var bitArray = new Array(4 * hex.length);
-
-    var resultIdx = 0;
-    var element = 0;
-    for (var i = 0; i < hex.length; i++) {
-        var it = parseInt(hex[hex.length - 1 - i], 16);
-        for (var j = 0; j < 4; j++) {
-            var idx = i * 4 + j;
-            var bit = +((it & (1 << j)) != 0);
-            bitArray[idx] = bit;
-
-            const idxn = idx % n
-            if (idx != 0 && idxn == 0) {
-                result[resultIdx] = element;
-                resultIdx++;
-                element = 0;
-            }
-            element += bit * 2 ** idxn;
-            // TODO: this element would be too large, what type should we use here?
-        }
+function bigint_to_array(n, k, x) {
+    let mod = 1n
+    for (var idx = 0; idx < n; idx++) {
+      mod = mod * 2n
     }
-
-    if (element != 0) {
-        result[resultIdx] = element;
+  
+    let ret = []
+    var x_temp = x
+    for (var idx = 0; idx < k; idx++) {
+      ret.push(x_temp % mod)
+      x_temp = x_temp / mod
     }
+    return ret
+}
 
-    return result
+function split(pubkey_bigint) {
+    const x_bigint = pubkey_bigint / 2n ** 256n
+    const y_bigint = pubkey_bigint % 2n ** 256n
+    return [x_bigint, y_bigint]
 }
 
 export async function getInput(signer) {
+    // const poseidon = await buildPoseidon();
+
     const sAddr = await signer.getAddress();
     console.log(sAddr);
 
@@ -55,28 +46,25 @@ export async function getInput(signer) {
     const addr = ethers.utils.computeAddress(ethers.utils.arrayify(pubKey));
     console.log(addr);
 
-    console.log(hexStrToArray(86, 3, sig.r))
-    // const arr = bigint_to_array(1, 3, 512)
-    // console.log(arr)
+    const [x, y] = split(BigInt(pubKey))
+    const chunkedX = bigint_to_array(86, 3, x)
+    const chunkedY = bigint_to_array(86, 3, y)
 
-    // TODO:
-    // chuckedPubKey: flatternPubKey(86, 3, pubKey)
-    // nullifier = Poseidon(sig.r[0])
-
+    // TODO: nullifier
     // TODO: get merkleRoot, merklePathElements, and merklePathIndices
 
     return {
-        r: hexStrToArray(86, 3, sig.r),
-        s: hexStrToArray(86, 3, sig.s),
-        msghash: hexStrToArray(86, 3, msgHash),
+        r: bigint_to_array(86, 3, BigInt(sig.r)),
+        s: bigint_to_array(86, 3, BigInt(sig.s)),
+        msghash: bigint_to_array(86, 3, BigInt(msgHash)),
         chunkedPubkey: [
-            [10, 10, 10],
-            [10, 10, 10]
+            chunkedX,
+            chunkedY
         ],
-        nullifier: 10,
+        // nullifier: poseidon(r[0]),
         merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
         merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
         merkleRoot: 1234
     }
 }
-
+/*eslint-disable*/
