@@ -30,96 +30,6 @@ const HARDHAT_NETWORK_ID = '31337'
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001
 
-// TODO: move this to the right place!!!
-async function _generateProof() {
-  const input = await getInput(this._provider.getSigner(0))
-  console.log(input);
-
-  console.log("Calculate Proof");
-  // TODO: dummy input, used for testing
-  const merkleRoot = 1234
-  const nullifier = 10
-
-  const proof = await calculateProof(input);
-  const args = buildContractCallArgs(proof, merkleRoot, nullifier)
-  console.log(args)
-  // When, we initialize the contract using that provider and the token's
-  // artifact. You can do this same thing with your contracts.
-
-  // this._token = new ethers.Contract(
-  //   contractAddress.Token,
-  //   TokenArtifact.abi,
-  //   this._provider.getSigner(0)
-  // );
-}
-
-async function handleProve(forceRefresh) {
-  // ethers signMessage
-  // get publicKey and generate chunked pub key
-  // generate nullifier from signed message
-  console.log('Calculate Proof')
-  // TODO: dummy input, used for testing
-  // const input = {
-  //   r: [10, 10, 10],
-  //   s: [10, 10, 10],
-  //   msghash: [10, 10, 10],
-  //   chunkedPubkey: [
-  //     [10, 10, 10],
-  //     [10, 10, 10],
-  //   ],
-  //   nullifier: 10,
-  //   merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-  //   merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-  //   merkleRoot: 1234,
-  // }
-  // const proof = await calculateProof(input)
-  const proof = {
-    boo: 'blah',
-  }
-
-  console.log(proof)
-
-  const address = '123' // change this to address of currently connected Ethereum account
-
-  // save proof to localStorage
-  const storedProofs = window.localStorage.getItem('proofs')
-  const currentProofs = storedProofs ? JSON.parse(storedProofs) : []
-  window.localStorage.setItem(
-    'proofs',
-    JSON.stringify([
-      ...currentProofs,
-      {
-        address,
-        proof,
-      },
-    ])
-  )
-  forceRefresh()
-}
-
-async function handleVerify(index, account, proof, forceRefresh) {
-  // take proof and call smart contract
-  const proofs = JSON.parse(window.localStorage.getItem('proofs'))
-
-  window.localStorage.setItem(
-    'proofs',
-    JSON.stringify(proofs.filter((proof) => proof.address === account))
-  )
-
-  // call smart contract with this proof
-  // pass public inputs, nullifier, merkle root
-
-  // if successful move proof to usedProofs
-  const storedProofs = window.localStorage.getItem('usedProofs')
-  const usedProofs = storedProofs ? JSON.parse(storedProofs) : []
-  window.localStorage.setItem(
-    'usedProofs',
-    JSON.stringify([...usedProofs, proof])
-  )
-
-  forceRefresh()
-}
-
 const Title = styled.h2``
 
 export class Dapp extends React.Component {
@@ -185,7 +95,7 @@ export class Dapp extends React.Component {
         Hello: {this.state.selectedAddress}
         <button
           onClick={() =>
-            handleProve(() =>
+            this._handleProve(() =>
               this.setState({ forceRefresh: this.forceRefresh + 1 })
             )
           }
@@ -198,7 +108,7 @@ export class Dapp extends React.Component {
             Proof {proof.address} {index} -{' '}
             <button
               onClick={() =>
-                handleVerify(index, this.selectedAddress, proof, () =>
+                this._handleVerify(index, this.selectedAddress, proof, () =>
                   this.setState({ forceRefresh: this.forceRefresh + 1 })
                 )
               }
@@ -219,6 +129,61 @@ export class Dapp extends React.Component {
     // We poll the user's balance, so we have to stop doing that when Dapp
     // gets unmounted
     this._stopPollingData()
+  }
+
+  async _handleProve(forceRefresh) {
+    // ethers signMessage
+    // get publicKey and generate chunked pub key
+    // generate nullifier from signed message
+    console.log('Calculate Proof')
+
+    const input = await getInput(this._provider.getSigner(0))
+    console.log(input);
+
+    const proof = await calculateProof(input);
+    console.log(proof);
+
+    const merkleRoot = 1234
+    const nullifier = 10
+    const contractArgs = buildContractCallArgs(proof, merkleRoot, nullifier)
+    console.log(contractArgs)
+
+    const address = '123' // change this to address of currently connected Ethereum account
+
+    // save proof to localStorage
+    const storedProofs = window.localStorage.getItem('proofs')
+    const currentProofs = storedProofs ? JSON.parse(storedProofs) : []
+    window.localStorage.setItem(
+      'proofs',
+      JSON.stringify([
+        ...currentProofs,
+        contractArgs
+      ])
+    )
+    forceRefresh()
+  }
+
+  async _handleVerify(index, account, proof, forceRefresh) {
+    // take proof and call smart contract
+    const proofs = JSON.parse(window.localStorage.getItem('proofs'))
+
+    window.localStorage.setItem(
+      'proofs',
+      JSON.stringify(proofs.filter((item) => item.address === account))
+    )
+
+    // call smart contract with this proof
+    // the item is the smart contract argument, can pass into the smart contract
+
+    // if successful move proof to usedProofs
+    const storedProofs = window.localStorage.getItem('usedProofs')
+    const usedProofs = storedProofs ? JSON.parse(storedProofs) : []
+    window.localStorage.setItem(
+      'usedProofs',
+      JSON.stringify([...usedProofs, proof])
+    )
+
+    forceRefresh()
   }
 
   async _connectWallet() {
