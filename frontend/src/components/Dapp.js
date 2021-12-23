@@ -168,9 +168,12 @@ export class Dapp extends React.Component {
     this._stopPollingData();
   }
 
-  async _connectWallet() {
+  // TODO: move this to the right place!!!
+  async _generateProof() {
     console.log("Calculate Proof");
     // TODO: dummy input, used for testing
+    const merkleRoot = 1234
+    const nullifier = 10
     const input = {
       r: [10, 10, 10],
       s: [10, 10, 10],
@@ -179,13 +182,19 @@ export class Dapp extends React.Component {
           [10, 10, 10],
           [10, 10, 10]
       ],
-      nullifier: 10,
+      nullifier: nullifier,
       merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
       merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-      merkleRoot: 1234
+      merkleRoot: merkleRoot
     }  
     const proof = await calculateProof(input);
-    console.log(proof);
+    const args = buildContractCallArgs(proof, merkleRoot, nullifier)
+    console.log(args)
+  }
+
+  async _connectWallet() {
+    // TODO: move this to the right place!!!
+    await this._generateProof();
 
     // This method is run when the user clicks the Connect. It connects the
     // dapp to the user's wallet, and initializes it.
