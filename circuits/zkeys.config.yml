@@ -13,7 +13,7 @@ circuits:
 - template: "./circuits/verify_df_winner.circom"
   component: "VerifyDfWinner"
   params: [86, 3, 10] # NOTE: levels TBD based on actual data
-  pubInputs: ["merkleRoot"]
+  pubInputs: ["merkleRoot", "nullifier"]
   type: "prod"
 
 ptauFiles:

@@ -24,12 +24,8 @@ async function main() {
   await verifier.deployed();
   console.log("Verifier address:", verifier.address);
 
-  const AttestationMinter = await ethers.getContractFactory("AttestationMinter", {
-    libraries: {
-      Verifier: verifier.address,
-    },
-  });
-  const minter = await AttestationMinter.deploy();
+  const AttestationMinter = await ethers.getContractFactory("AttestationMinter");
+  const minter = await AttestationMinter.deploy(verifier.address);
   await minter.deployed();
   console.log("AttestationMinter address:", minter.address);
 

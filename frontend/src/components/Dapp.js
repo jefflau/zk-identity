@@ -184,7 +184,7 @@ export class Dapp extends React.Component {
       merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
       merkleRoot: 1234
     }  
-    const proof = await CalculateProof(input);
+    const proof = await calculateProof(input);
     console.log(proof);
 
     // This method is run when the user clicks the Connect. It connects the
