@@ -18,7 +18,7 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 
-import { getMsgHash, getSignature } from "../helpers/GetSignature";
+import { getInput } from "../helpers/GetInput";
 import { calculateProof, buildContractCallArgs } from "../helpers/ProofHelper";
 
 // This is the Hardhat Network id, you might change it in the hardhat.config.js
@@ -226,29 +226,14 @@ export class Dapp extends React.Component {
 
   // TODO: move this to the right place!!!
   async _generateProof() {
-    const msgHash = getMsgHash();
-    const sig = await getSignature(this._provider.getSigner(0), msgHash)
-    console.log("msgHash: " + msgHash)
-    console.log("sig.r: " + sig.r)
-    console.log("sig.s: " + sig.s)
+    const input = await getInput(this._provider.getSigner(0))
+    console.log(input);
 
     console.log("Calculate Proof");
     // TODO: dummy input, used for testing
     const merkleRoot = 1234
     const nullifier = 10
-    const input = {
-      r: [10, 10, 10],
-      s: [10, 10, 10],
-      msghash: [10, 10, 10],
-      chunkedPubkey: [
-          [10, 10, 10],
-          [10, 10, 10]
-      ],
-      nullifier: nullifier,
-      merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-      merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-      merkleRoot: merkleRoot
-    }
+
     const proof = await calculateProof(input);
     const args = buildContractCallArgs(proof, merkleRoot, nullifier)
     console.log(args)
