@@ -150,8 +150,6 @@ export class Dapp extends React.Component {
     const contractArgs = buildContractCallArgs(proof, merkleRoot, nullifier)
     console.log(contractArgs)
 
-    const address = '123' // change this to address of currently connected Ethereum account
-
     // save proof to localStorage
     const storedProofs = window.localStorage.getItem('proofs')
     const currentProofs = storedProofs ? JSON.parse(storedProofs) : []
@@ -174,16 +172,25 @@ export class Dapp extends React.Component {
       JSON.stringify(proofs.filter((item) => item.address === account))
     )
 
-    // call smart contract with this proof
-    // the item is the smart contract argument, can pass into the smart contract
+    // NOTE: this assumes that proof is the proper output from `buildContractCallArgs
+    const tx = await this._minter.mint(
+      proof[0],
+      proof[1],
+      proof[2],
+      proof[3],
+      proof[4]
+    );
+    const receipt = await tx.wait();
+    // TODO: txBeingSent and all that jazz. like in the unused transfer message
 
-    // if successful move proof to usedProofs
-    const storedProofs = window.localStorage.getItem('usedProofs')
-    const usedProofs = storedProofs ? JSON.parse(storedProofs) : []
-    window.localStorage.setItem(
-      'usedProofs',
-      JSON.stringify([...usedProofs, proof])
-    )
+    if (receipt.status !== 0) {
+      const storedProofs = window.localStorage.getItem('usedProofs')
+      const usedProofs = storedProofs ? JSON.parse(storedProofs) : []
+      window.localStorage.setItem(
+        'usedProofs',
+        JSON.stringify([...usedProofs, proof])
+      )
+    }
 
     forceRefresh()
   }
