@@ -6,6 +6,7 @@ import { ethers } from 'ethers'
 
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
+import AttestationMinterArtifact from '../contracts/AttestationMinter.json'
 import contractAddress from '../contracts/contract-address.json'
 
 // All the logic of this dapp is contained in the Dapp component.
@@ -233,19 +234,19 @@ export class Dapp extends React.Component {
       selectedAddress: userAddress,
     })
 
-    // Then, we initialize ethers, fetch the token's data, and start polling
-    // for the user's balance.
-
-    // Fetching the token data and the user's balance are specific to this
-    // sample project, but you can reuse the same initialization pattern.
+    // Then, we initialize ethers + contract
     this._intializeEthers()
-    // this._getTokenData()
-    // this._startPollingData()
   }
 
   async _intializeEthers() {
     // We first initialize ethers by creating a provider using window.ethereum
     this._provider = new ethers.providers.Web3Provider(window.ethereum)
+
+    this._minter = new ethers.Contract(
+      contractAddress.AttestationMinter,
+      AttestationMinterArtifact.abi,
+      this._provider.getSigner(0)
+    )
   }
 
   // The next two methods are needed to start and stop polling data. While
