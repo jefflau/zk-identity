@@ -6,6 +6,7 @@ import { ethers } from 'ethers'
 
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
+import AttestationMinterArtifact from '../contracts/AttestationMinter.json'
 import contractAddress from '../contracts/contract-address.json'
 
 // All the logic of this dapp is contained in the Dapp component.
@@ -26,6 +27,7 @@ import { calculateProof, buildContractCallArgs } from "../helpers/ProofHelper";
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
 const HARDHAT_NETWORK_ID = '31337'
+const GOERLI_NETWORK_ID = '5'
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001
@@ -148,8 +150,6 @@ export class Dapp extends React.Component {
     const contractArgs = buildContractCallArgs(proof, merkleRoot, nullifier)
     console.log(contractArgs)
 
-    const address = '123' // change this to address of currently connected Ethereum account
-
     // save proof to localStorage
     const storedProofs = window.localStorage.getItem('proofs')
     const currentProofs = storedProofs ? JSON.parse(storedProofs) : []
@@ -172,16 +172,25 @@ export class Dapp extends React.Component {
       JSON.stringify(proofs.filter((item) => item.address === account))
     )
 
-    // call smart contract with this proof
-    // the item is the smart contract argument, can pass into the smart contract
+    // NOTE: this assumes that proof is the proper output from `buildContractCallArgs
+    const tx = await this._minter.mint(
+      proof[0],
+      proof[1],
+      proof[2],
+      proof[3],
+      proof[4]
+    );
+    const receipt = await tx.wait();
+    // TODO: txBeingSent and all that jazz. like in the unused transfer message
 
-    // if successful move proof to usedProofs
-    const storedProofs = window.localStorage.getItem('usedProofs')
-    const usedProofs = storedProofs ? JSON.parse(storedProofs) : []
-    window.localStorage.setItem(
-      'usedProofs',
-      JSON.stringify([...usedProofs, proof])
-    )
+    if (receipt.status !== 0) {
+      const storedProofs = window.localStorage.getItem('usedProofs')
+      const usedProofs = storedProofs ? JSON.parse(storedProofs) : []
+      window.localStorage.setItem(
+        'usedProofs',
+        JSON.stringify([...usedProofs, proof])
+      )
+    }
 
     forceRefresh()
   }
@@ -232,19 +241,19 @@ export class Dapp extends React.Component {
       selectedAddress: userAddress,
     })
 
-    // Then, we initialize ethers, fetch the token's data, and start polling
-    // for the user's balance.
-
-    // Fetching the token data and the user's balance are specific to this
-    // sample project, but you can reuse the same initialization pattern.
+    // Then, we initialize ethers + contract
     this._intializeEthers()
-    // this._getTokenData()
-    // this._startPollingData()
   }
 
   async _intializeEthers() {
     // We first initialize ethers by creating a provider using window.ethereum
     this._provider = new ethers.providers.Web3Provider(window.ethereum)
+
+    this._minter = new ethers.Contract(
+      contractAddress.AttestationMinter,
+      AttestationMinterArtifact.abi,
+      this._provider.getSigner(0)
+    )
   }
 
   // The next two methods are needed to start and stop polling data. While
@@ -365,14 +374,14 @@ export class Dapp extends React.Component {
     this.setState(this.initialState)
   }
 
-  // This method checks if Metamask selected network is Localhost:8545
+  // This method checks if Metamask selected network is Localhost:8545 or goerli
   _checkNetwork() {
-    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
+    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID || window.ethereum.networkVersion === GOERLI_NETWORK_ID) {
       return true
     }
 
     this.setState({
-      networkError: 'Please connect Metamask to Localhost:8545',
+      networkError: 'Please connect Metamask to Localhost:8545 or goerli',
     })
 
     return false
