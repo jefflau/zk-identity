@@ -1,7 +1,7 @@
 {
-  "name": "hardhat-hackathon-boilerplate",
+  "name": "zk-identity",
   "version": "1.0.0",
-  "description": "A boilerplate repository to get you started with Hardhat and Ethereum development",
+  "description": "",
   "directories": {
     "test": "test"
   },
@@ -18,7 +18,7 @@
     "ethereum",
     "hackathon"
   ],
-  "author": "Nomic Labs",
+  "author": "",
   "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/nomiclabs/hardhat-hackathon-boilerplate/issues"
