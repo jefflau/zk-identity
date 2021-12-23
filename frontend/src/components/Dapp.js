@@ -26,6 +26,7 @@ import { calculateProof, buildContractCallArgs } from "../helpers/ProofHelper";
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
 const HARDHAT_NETWORK_ID = '31337'
+const GOERLI_NETWORK_ID = '5'
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001
@@ -365,14 +366,14 @@ export class Dapp extends React.Component {
     this.setState(this.initialState)
   }
 
-  // This method checks if Metamask selected network is Localhost:8545
+  // This method checks if Metamask selected network is Localhost:8545 or goerli
   _checkNetwork() {
-    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
+    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID || window.ethereum.networkVersion === GOERLI_NETWORK_ID) {
       return true
     }
 
     this.setState({
-      networkError: 'Please connect Metamask to Localhost:8545',
+      networkError: 'Please connect Metamask to Localhost:8545 or goerli',
     })
 
     return false
