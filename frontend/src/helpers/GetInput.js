@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 
-const MESSAGE = "ZK identity: Dark forest winners";
+const MESSAGE = "ZK Identity: Dark Forest Winners";
 
 function bigint_to_array(n, k, x) {
     let mod = 1n
@@ -21,14 +21,26 @@ export async function getInput(signer) {
     const sAddr = await signer.getAddress();
     console.log(sAddr);
 
-    const msgHash = ethers.utils.id(MESSAGE);
-    const msgHashBytes = ethers.utils.arrayify(msgHash)
-    const flatSig = await signer.signMessage(msgHashBytes);
+    const msgHash = ethers.utils.hashMessage(MESSAGE);
+    const msgHashBytes = ethers.utils.arrayify(msgHash);
 
+    const flatSig = await signer.signMessage(MESSAGE);
     const sig = ethers.utils.splitSignature(flatSig);
+
     const pubKey = ethers.utils.recoverPublicKey(msgHashBytes, flatSig);
+
+    // just to double check, this addr should match the sAddr above
     const addr = ethers.utils.computeAddress(ethers.utils.arrayify(pubKey));
     console.log(addr);
+
+    // TODO:
+    // r: bitint_to_array(86, 3, sig.r)
+    // s: bigint_to_array(86, 3, sig.s)
+    // msgHash: bigint_to_array(86, 3, msgHash)
+    // chuckedPubKey: flatternPubKey(86, 3, pubKey)
+    // nullifier = Poseidon(sig.r[0])
+
+    // TODO: get merkleRoot, merklePathElements, and merklePathIndices
 
     return {}
     // return {
