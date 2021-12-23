@@ -32,24 +32,24 @@ contract AttestationMinter is ERC721 {
         uint256[2] memory _c,
         uint256 _merkleRoot,
         uint256 _nullifier) external {
-        require(
-            nullifiers[_nullifier] == false,
-            "AttestationMinter: nullifier has been used"
-        );
+        //require(
+            //nullifiers[_nullifier] == false,
+            //"AttestationMinter: nullifier has been used"
+        //);
 
         // verify proof
-        require(
-            verifier.verifyProof(
-                _a,
-                _b,
-                _c,
-                [
-                    _merkleRoot,
-                    _nullifier
-                ]
-            ),
-            "AttestationMinter: invalid proof"
-        );
+        //require(
+            //verifier.verifyProof(
+                //_a,
+                //_b,
+                //_c,
+                //[
+                    //_merkleRoot,
+                    //_nullifier
+                //]
+            //),
+            //"AttestationMinter: invalid proof"
+        //);
 
         nullifiers[_nullifier] = true;
 
