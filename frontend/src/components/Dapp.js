@@ -174,11 +174,11 @@ export class Dapp extends React.Component {
 
     // NOTE: this assumes that proof is the proper output from `buildContractCallArgs
     const tx = await this._minter.mint(
-      proof[0],
-      proof[1],
-      proof[2],
-      proof[3],
-      proof[4]
+      [0, 1],
+      [[1, 2], [3, 4]],
+      [5, 6],
+      25,
+      32
     );
     const receipt = await tx.wait();
     // TODO: txBeingSent and all that jazz. like in the unused transfer message
