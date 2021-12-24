@@ -63,17 +63,17 @@ template VerifyDfWinner(n, k, levels) {
   address <== pubkeyToAddress.address;
 
   // merkle verify
-  component treeChecker = MerkleTreeChecker(levels);
-  treeChecker.leaf <== address;
-  treeChecker.root <== merkleRoot;
-  for (var i = 0; i < levels; i++) {
-    treeChecker.pathElements[i] <== merklePathElements[i];
-    treeChecker.pathIndices[i] <== merklePathIndices[i];
-  }
+  // component treeChecker = MerkleTreeChecker(levels);
+  // treeChecker.leaf <== address;
+  // treeChecker.root <== merkleRoot;
+  // for (var i = 0; i < levels; i++) {
+  //   treeChecker.pathElements[i] <== merklePathElements[i];
+  //   treeChecker.pathIndices[i] <== merklePathIndices[i];
+  // }
 
   // nullifier check
 
-  component nullifierCheck = Poseidon(1);
-  nullifierCheck.inputs[0] <== r[0];
-  nullifierCheck.out === nullifier;
+  // component nullifierCheck = Poseidon(1);
+  // nullifierCheck.inputs[0] <== r[0];
+  // nullifierCheck.out === nullifier;
 }

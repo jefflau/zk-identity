@@ -61,9 +61,9 @@ export async function getInput(signer) {
             chunkedX,
             chunkedY
         ],
-        // nullifier: poseidon(r[0]),
-        merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-        merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        nullifier: 10,
+        merklePathElements: [10, 10, 10, 10, 10, 10, 10, 10],
+        merklePathIndices: [0, 1, 0, 1, 0, 1, 0, 1],
         merkleRoot: 1234
     }
 }
